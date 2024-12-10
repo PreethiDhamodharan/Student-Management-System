@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Records</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+            background-image: url("https://image.slidesdocs.com/responsive-images/background/graduation-season-student-cyan-powerpoint-background_3378bac538__960_540.jpg");
+            background-size: cover;
+        }
+        h1 {
+            color: white;
+            font-size: 30px;
+        }
+        table {
+            width: 90%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background: linear-gradient(to right, rgb(235, 88, 174), rgb(241, 211, 172));
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 5px;
+            text-align: center;
+        }
+        th {
+            background-color: rgb(144, 241, 241);
+        }
+        button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+        .clear-btn { background-color: black; color: white; }
+        .print-btn { background-color: green; color: white; }
+        .update-btn { background-color: orange; color: white; }
+        .delete-btn { background-color: red; color: white; }
+        .home-btn {
+            position: fixed;
+            left: 850px;
+            background-color: blue;
+            color: white;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover { transform: scale(1.1); opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <h1>Student Score Records</h1>
+    
+    <button class="clear-btn" onclick="clearAllCourses()">Clear All</button>
+    <button class="print-btn" onclick="printTable()">Print</button>
+    <button class="home-btn" onclick="goToHome()">Go to Home Page</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Semester</th>
+                <th>Course 1 Score</th>
+                <th>Course 2 Score</th>
+                <th>Course 3 Score</th>
+                <th>Course 4 Score</th>
+                <th>Course 5 Score</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="scoreTableBody"></tbody>
+    </table>
+    <script>
+        const scores = JSON.parse(localStorage.getItem("scores")) || [];
+        const tableBody = document.getElementById("scoreTableBody");
+
+        function renderStudents() {
+            tableBody.innerHTML = ""; 
+            scores.forEach((score, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${score.studentId}</td>
+                    <td>${score.semester}</td>
+                    <td>${score.course1}</td>
+                    <td>${score.course2}</td>
+                    <td>${score.course3}</td>
+                    <td>${score.course4}</td>
+                    <td>${score.course5}</td>
+                    <td>
+                        <button class="update-btn" onclick="editscore(${index})">Edit</button>
+                        <button class="delete-btn" onclick="deletescore(${index})">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        function editscore(index) {
+            const score = scores[index];
+            const fieldToEdit = prompt(
+                "Which field do you want to edit?\n" +
+                "1. Student ID\n" +
+                "2. Semester\n" +
+                "3. Course 1\n" +
+                "4. Course 2\n" +
+                "5. Course 3\n" +
+                "6. Course 4\n" +
+                "7. Course 5\n" +
+                "Enter the corresponding number:"
+            );
+
+            const fields = [
+                "studentId",
+                "semester",
+                "course1",
+                "course2",
+                "course3",
+                "course4",
+                "course5",
+            ];
+            const fieldIndex = parseInt(fieldToEdit, 10) - 1;
+
+            if (fieldIndex < 0 || fieldIndex >= fields.length || isNaN(fieldIndex)) {
+                return alert("Invalid selection. Please try again.");
+            }
+
+            const updatedValue = prompt(`Enter new value for ${fields[fieldIndex]}:`, score[fields[fieldIndex]]);
+            if (updatedValue !== null && updatedValue.trim() !== "") {
+                score[fields[fieldIndex]] = updatedValue.trim();
+                localStorage.setItem("scores", JSON.stringify(scores));
+                renderStudents();
+                alert(`${fields[fieldIndex]} updated successfully!`);
+            } else {
+                alert("Invalid input. Update canceled.");
+            }
+        }
+
+        function deletescore(index) {
+            const confirmDelete = confirm("Are you sure you want to delete this course?");
+            if (confirmDelete) {
+                scores.splice(index, 1);
+                localStorage.setItem("scores", JSON.stringify(scores));
+                renderStudents();
+            }
+        }
+
+        function clearAllscores() {
+            const confirmClear = confirm("Are you sure you want to clear all records?");
+            if (confirmClear) {
+                localStorage.removeItem("scores");
+                scores.length = 0; 
+                renderStudents();
+            }
+        }
+        
+        function printTable() {
+            const originalContent = document.body.innerHTML;
+            const tableContent = document.querySelector("table").outerHTML;
+            document.body.innerHTML = `<h1>Score Records</h1>${tableContent}`;
+            window.print();
+            document.body.innerHTML = originalContent;
+        }
+
+        function goToHome() {
+            window.location.href = "Homepage.html";
+        }
+
+        renderStudents();
+    </script>
+</body>
+</html>

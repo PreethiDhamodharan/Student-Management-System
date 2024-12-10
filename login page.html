@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login-page</title>
+    <style>
+        .Table-container{
+            font-family: Arial,  sans-serif;
+            justify-items: center;
+            background-image: url("https://image.slidesdocs.com/responsive-images/background/graduation-season-bachelor-cap-back-view-illustration-back-view-powerpoint-background_486ef3e0c0__960_540.jpg");
+            background-size:100%;
+        }
+        .login-container{
+            width: 300px;
+            height: 800px;
+            padding-bottom: 100px;
+            justify-content: center;
+            
+        }
+        .login-container h2{
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-control{
+            margin-bottom: 15px;
+        }
+        .form-control label{
+            display: block;
+            font-weight: bold;
+        }
+        .form-control input{
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .login-btn {
+            width: 50%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 100px;
+            cursor: pointer;
+            
+        }
+        .login-btn:hover {
+            background-color: #45a049;
+            text-align: center;
+        }
+        .error,.success{
+            margin-top:10px;
+            font-size: 0.9em;
+            text-align: center;
+        }
+        .error{
+            color: red;
+        }
+        .success{
+            color:green;
+        }
+        .forget-password{
+            text-align: center;
+            padding:10px;
+            
+        }
+        
+    </style>
+</head>
+<body>
+                <table style="width:100%;height:100%;"  class="Table-container">
+                    <tr>
+                        <td style="width:100%">
+                            <table style="width:22%" align="center">
+                                <tr>
+                                    <td style="width:100%;padding:8%">
+
+                                        <div class="login-container">
+                                            <h2>Admin Login</h2>
+                                            <form id="loginform" onsubmit="return loginmethod()">
+                                        
+                                            <div class="form-control">
+                                            <label for="username">Admin Username</label>
+                                            <input type="text" id="username" placeholder="Enter the username">
+                                            </div>
+
+                                            <div class="form-control">
+                                                <label for="password">Password</label>
+                                                <input type="password" id="password" placeholder="Enter the password">
+                                            </div>
+
+                                            <div style="display:flex;justify-content: center;">
+                                                <button type="submit" class="login-btn">Login</button>
+                                            </div>
+
+                                                <p id="errormessage" class="error"></p>
+                                                <p id="successmessage" class="success"></p>
+                                                
+                                            </form>
+                                            <div class="forget-password">
+                                                <a href="forget-password.html">Forget Password</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                </body>
+    
+    <script>
+        const validusername="admin";
+        const validpassword="admin123";
+
+        function loginmethod(){
+            const username=document.getElementById("username").value;
+            const password=document.getElementById("password").value;
+            const errormessage=document.getElementById("errormessage");
+            const successmessage=document.getElementById("successmessage");
+
+            errormessage.textContent="";
+            successmessage.textContent="";
+
+            if(username==validusername && password==validpassword){
+                alert("Login successful!");
+                window.location.href = "Homepage.html";
+                
+                return false;
+            }
+            else{
+                errormessage.textContent="Invalid username or password ";
+                return false;
+            }
+            
+        }
+    </script>
+</html>

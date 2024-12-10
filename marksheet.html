@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Marksheet</title>
+  <style>
+    /* styles.css */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    button {
+      background: #007bff;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Student Marksheet Search</h1>
+    <input 
+      type="text" 
+      id="search-input" 
+      placeholder="Search by ID or Name..." 
+      onkeyup="filterscores()"
+    />
+    <table id="students-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>CGPA</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody id="students-body">
+        <!-- Rows will be dynamically populated -->
+      </tbody>
+    </table>
+    <div id="result" class="hidden">
+      <h2>Student Marksheet</h2>
+      <p>ID: <span id="result-id"></span></p>
+      <p>Name: <span id="result-name"></span></p>
+      <p>CGPA: <span id="result-cgpa"></span></p>
+      <p>Marks:</p>
+      <ul id="result-marks"></ul>
+    </div>
+  </div>
+  <script>
+    // Load students from localStorage, or use an empty array if no data exists
+    const scores = JSON.parse(localStorage.getItem("scores")) || [];
+    const tableBody = document.getElementById("students-body");
+
+    // Initialize the table with students data from localStorage
+    function populateTable() {
+      tableBody.innerHTML = ""; // Clear existing table rows
+
+      scores.forEach((score) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${score.id}</td>
+          <td>${score.name}</td>
+          <td>${score.cgpa}</td>
+          <td><button onclick="viewDetails('${score.id}')">View</button></td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Filter students by ID or name from localStorage
+    function filterscores() {
+      const query = document.getElementById("search-input").value.toLowerCase();
+      const filteredscores = scores.filter(
+        (score) =>
+          score.id.toLowerCase().includes(query) ||
+          score.name.toLowerCase().includes(query)
+      );
+
+      const tableBody = document.getElementById("students-body");
+      tableBody.innerHTML = ""; // Clear existing table rows
+
+      filteredscores.forEach((score) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${score.id}</td>
+          <td>${score.name}</td>
+          <td>${score.cgpa}</td>
+          <td><button onclick="viewDetails('${score.id}')">View</button></td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Display student details when clicked
+    function viewDetails(studentId) {
+      const score = scores.find((s) => s.id === studentId);
+
+      if (!score) {
+        alert("Student not found!");
+        return;
+      }
+
+      document.getElementById("result-id").textContent = score.id;
+      document.getElementById("result-name").textContent = score.name;
+      document.getElementById("result-cgpa").textContent = score.cgpa;
+
+      const marksList = document.getElementById("result-marks");
+      marksList.innerHTML = ""; // Clear previous marks list
+      for (const [subject, marks] of Object.entries(score.marks)) {
+        const li = document.createElement("li");
+        li.textContent = `${subject}: ${marks}`;
+        marksList.appendChild(li);
+      }
+
+      // Show the result section
+      document.getElementById("result").classList.remove("hidden");
+    }
+
+    populateTable();
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>course-page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("https://png.pngtree.com/background/20230317/original/pngtree-abstract-celebration-graduation-background-picture-image_2148708.jpg");
+            margin: 0;
+            padding: 50px;
+            color: black;
+            background-size: cover;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            background: linear-gradient(to right, rgb(235, 88, 174), rgb(241, 211, 172));
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            flex: 1;
+            font-weight: bold;
+        }
+        .form-group input,
+        .form-group select {
+            flex: 2;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group button {
+            background-color: brown;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: palevioletred;
+        }
+        .submit-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .submit-container button {
+            padding: 12px 24px;
+            border: none;
+            background-color: brown;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .submit-container button:hover {
+            background-color: palevioletred;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Students Course</h2>
+        <form id="studentform">
+            <div class="form-group">
+                <label for="Stuid">Student ID:</label>
+                <input type="text" id="Stuid" placeholder="Student ID" required>
+            </div>
+            <div class="form-group">
+                <label for="semester">Semester:</label>
+                <select id="semester" name="semester" required>
+                    <option value="">Select</option>
+                    <option value="semester 1">Semester 1</option>
+                    <option value="semester 2">Semester 2</option>
+                    <option value="semester 3">Semester 3</option>
+                    <option value="semester 4">Semester 4</option>
+                    <option value="semester 5">Semester 5</option>
+                    <option value="semester 6">Semester 6</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="course_1">Course 1:</label>
+                <select id="course_1" name="course_1" required>
+                    <option value="">Select</option>
+                    <option value="java">Java</option>
+                    <option value="python">Python</option>
+                    <option value=".net">.net</option>
+                    <option value="operating System(os)">Operating System(os)</option>
+                    <option value="c">C</option>
+                    <option value="c++">C++</option>
+                    <option value="SQL">SQL</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="course_2">Course 2:</label>
+                <select id="course_2" name="course_2" required>
+                    <option value="">Select</option>
+                    <option value="java">Java</option>
+                    <option value="python">Python</option>
+                    <option value=".net">.net</option>
+                    <option value="operating System(os)">Operating System(os)</option>
+                    <option value="c">C</option>
+                    <option value="c++">C++</option>
+                    <option value="SQL">SQL</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="course_3">Course 3:</label>
+                <select id="course_3" name="course_3" required>
+                    <option value="">Select</option>
+                    <option value="java">Java</option>
+                    <option value="python">Python</option>
+                    <option value=".net">.net</option>
+                    <option value="operating System(os)">Operating System(os)</option>
+                    <option value="c">C</option>
+                    <option value="c++">C++</option>
+                    <option value="SQL">SQL</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="course_4">Course 4:</label>
+                <select id="course_4" name="course_4" required>
+                    <option value="">Select</option>
+                    <option value="java">Java</option>
+                    <option value="python">Python</option>
+                    <option value=".net">.net</option>
+                    <option value="operating System(os)">Operating System(os)</option>
+                    <option value="c">C</option>
+                    <option value="c++">C++</option>
+                    <option value="SQL">SQL</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="course_5">Course 5:</label>
+                <select id="course_5" name="course_5" required>
+                    <option value="">Select</option>
+                    <option value="java">Java</option>
+                    <option value="python">Python</option>
+                    <option value=".net">.net</option>
+                    <option value="operating System(os)">Operating System(os)</option>
+                    <option value="c">C</option>
+                    <option value="c++">C++</option>
+                    <option value="SQL">SQL</option>
+                </select>
+            </div>
+            <div class="submit-container">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        const form = document.getElementById("studentform");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const course = {
+                studentId: document.getElementById("Stuid").value,
+                semester: document.getElementById("semester").value,
+                course1: document.getElementById("course_1").value,
+                course2: document.getElementById("course_2").value,
+                course3: document.getElementById("course_3").value,
+                course4: document.getElementById("course_4").value,
+                course5: document.getElementById("course_5").value,
+            };
+
+            const courses = JSON.parse(localStorage.getItem("courses")) || [];
+            courses.push(course);
+            localStorage.setItem("courses", JSON.stringify(courses));
+
+            alert("Course Updated Successfully!");
+            window.location.href = "courserecord.html";
+        });
+    </script>
+</body>
+</html>
